@@ -3,11 +3,12 @@ const btnFindDrink = document.querySelector('#find-drink-btn')
 
 btnFindDrink.addEventListener('click', findDrink)
 
-function findDrink() {
-    fetch (url)
-    .then ( res => res.json())
-    .then ( data => {
-        const random = Math.floor(Math.random() * data.drinks.length)
+async function findDrink() {
+	try {
+		const res = await fetch (url)
+		const data = await res.json()
+
+	    const random = Math.floor(Math.random() * data.drinks.length)
         const currentDrink = data.drinks[random]
 
         console.log(currentDrink.strAlcoholic)
@@ -21,9 +22,8 @@ function findDrink() {
         else {
             findDrink()
         }
-    
-        
-    })
-    .catch( err => console.log(err))
+	}
+	catch (err) {
+		console.log(err)
+	}
 }
-
