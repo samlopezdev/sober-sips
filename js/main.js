@@ -1,5 +1,6 @@
 const url = 'https://www.thecocktaildb.com/api/json/v1/1/random.php'
 const btnFindDrink = document.querySelector('#find-drink-btn')
+const result = document.querySelector('#result')
 
 btnFindDrink.addEventListener('click', findDrink)
 
@@ -11,13 +12,51 @@ async function findDrink() {
 	    const random = Math.floor(Math.random() * data.drinks.length)
         const currentDrink = data.drinks[random]
 
-        console.log(currentDrink.strAlcoholic)
-        if (currentDrink.strAlcoholic !== "Alcoholic") {
-            document.querySelector('img').src = currentDrink.strDrinkThumb
 
-            document.querySelector('p').innerText = currentDrink.strInstructions
-    
-            document.querySelector('h3').innerText = currentDrink.strDrink
+        if (currentDrink.strAlcoholic !== "Alcoholic") {
+
+            let ingredientsArr = []
+            let count = 1
+
+            for (let prop in currentDrink) {
+                let ingredient = ""
+                let measure = ""
+
+
+                if (prop.startsWith("strIngredient") && currentDrink[prop]) {
+                    ingredient = currentDrink[prop]
+
+                    if (currentDrink[`strMeasure` + count]) {
+                        measure = currentDrink[`strMeasure` + count]
+                    }
+                    else {
+                        measure = ""
+                    }
+                    count += 1
+                    ingredientsArr.push(`${measure}${ingredient}`)
+                }
+            }
+
+            result.innerHTML = `
+                <img src='${currentDrink.strDrinkThumb}' />
+                
+                <h3>${currentDrink.strDrink}</h3>
+                
+                <h4>Ingredients:</h4>
+                <ul class="ingredients"></ul>
+                    
+                <h4>Instructions:</h4>
+                <p>${currentDrink.strInstructions}</p>`
+                
+                let ingredientsContainer = document.querySelector('.ingredients')
+                ingredientsArr.forEach( item => {
+                    let listItem = document.createElement('li')
+                    listItem.innerText = item
+
+                    ingredientsContainer.appendChild(listItem)
+                })
+
+            
         }
         else {
             findDrink()
