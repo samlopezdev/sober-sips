@@ -2,6 +2,9 @@ const url = 'https://www.thecocktaildb.com/api/json/v1/1/random.php'
 const btnFindDrink = document.querySelector('#find-drink-btn')
 const result = document.querySelector('#result')
 
+btnFindDrink.addEventListener('click', () => {
+    
+})
 btnFindDrink.addEventListener('click', findDrink)
 
 async function findDrink() {
@@ -40,7 +43,7 @@ async function findDrink() {
             result.innerHTML = `
                 <img src='${currentDrink.strDrinkThumb}' />
                 
-                <h3>${currentDrink.strDrink}</h3>
+                <h2>${currentDrink.strDrink}</h2>
                 
                 <h4>Ingredients :</h4>
                 <ul class="ingredients"></ul>
@@ -56,7 +59,7 @@ async function findDrink() {
                     ingredientsContainer.appendChild(listItem)
                 })
 
-            
+            document.querySelector('header').classList.remove('page-load')
         }
         else {
             findDrink()
