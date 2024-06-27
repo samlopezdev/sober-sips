@@ -42,10 +42,10 @@ async function findDrink() {
                 
                 <h3>${currentDrink.strDrink}</h3>
                 
-                <h4>Ingredients:</h4>
+                <h4>Ingredients :</h4>
                 <ul class="ingredients"></ul>
                     
-                <h4>Instructions:</h4>
+                <h4>Instructions :</h4>
                 <p>${currentDrink.strInstructions}</p>`
                 
                 let ingredientsContainer = document.querySelector('.ingredients')
